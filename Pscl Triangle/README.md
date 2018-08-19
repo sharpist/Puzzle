@@ -1,6 +1,6 @@
-## Треугольник Паскаля
+## "Pascal's triangle"
 
-* бесконечная таблица биномиальных коэффициентов, имеющая треугольную форму
+* Pascal's triangle is a triangular array of the binomial coefficients.
 
 ### Demonstration: ###
 ![screen capture 1](01.gif)
