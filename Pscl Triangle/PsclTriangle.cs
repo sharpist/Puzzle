@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Threading;
 
-
 class Program
 {
     static void Main()
@@ -31,13 +30,12 @@ class Program
     }
 }
 
-
 struct PsclTriangle
 {
     private static ushort[][] triangle;
     public ushort this[byte i, byte j]
     {
-        get { return  triangle[i][j]; }
+        get { return triangle[i][j]; }
         private set { triangle[i][j] = value; }
     }
     static PsclTriangle() => triangle = new ushort[100][];
@@ -49,48 +47,31 @@ struct PsclTriangle
         {
             triangle[i] = new ushort[i + 1];
 
+            triangle[i][0] = 1;
+            triangle[i][triangle[i].Length - 1] = 1;
 
-            for (byte line = 0; line < triangle[i].Length - 2; line++)
+            // check subsets
+            if ((triangle[i].Length - 2) > 0)
             {
-                if (i != 0)
+                ushort sum = 0;
+                var subset = false;
+                for (byte j = 0; j < triangle[i].Length; j++)
                 {
-                    byte f = 0;
-                    ushort sum = 0;
-                    for (byte pair = 0; pair < triangle[i].Length; pair++)
+                    sum += triangle[i - 1][j];
+                    if (subset)
                     {
-                        sum += triangle[i - 1][pair];
-                        if (++f == 2)
-                        {
-                            f = 0;
-                            triangle[i][0] = 1;
-                            triangle[i][triangle[i].Length - 1] = 1;
-                            triangle[i][pair] = sum;
-                            if (triangle[i].Length-2 == pair) break;
-                            sum = 0;
-                            pair--;
-                            continue;
-                        }
-                    }
+                        subset = false;
+                        triangle[i][j] = sum;
+                        // all subsets have been found
+                        if (triangle[i].Length - 2 == j) break;
 
-
-                    if ((triangle[i].Length - 1) == 1)
-                        triangle[i][line] = sum;
-                    else
-                    {
-                        triangle[i][0] = 1;
-                        triangle[i][triangle[i].Length - 1] = 1;
-                        triangle[i][line + 1] = sum;
+                        // search for other subsets
+                        sum = 0; j--;
+                        continue;
                     }
+                    subset = true;
                 }
-
             }
-            triangle[0] = new ushort[1];
-            triangle[1] = new ushort[2];
-            triangle[0][0] = 1;
-                triangle[1][0] = 1;
-                triangle[1][1] = 1;
-
-
         }
         return triangle;
     }
