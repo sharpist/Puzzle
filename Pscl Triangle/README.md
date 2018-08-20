@@ -5,7 +5,7 @@
 ### Demonstration: ###
 ![screen capture 1](01.gif)
 
-### Construction of a triangle: ###
+### v.1 Construction of a triangle: ###
 ```c#
 for (byte i = 0; i < triangle.Length; i++)
 {
@@ -36,5 +36,21 @@ for (byte i = 0; i < triangle.Length; i++)
             subset = true;
         }
     }
+}
+```
+
+### v.2 Construction of a triangle: ###
+```c#
+for (byte i = 0; i < triangle.Length; i++)
+{
+    triangle[i] = new ushort[i + 1];
+    // first-last values
+    triangle[i][0] = triangle[i][triangle[i].Length - 1] = 1;
+
+    // check subsets
+    if (triangle[i].Length - 2 > 0)
+        for (byte j = 0; j < triangle[i].Length - 2; j++)
+            triangle[i][j + 1] = (ushort)(
+                triangle[i - 1][j] + triangle[i - 1][j + 1]);
 }
 ```
