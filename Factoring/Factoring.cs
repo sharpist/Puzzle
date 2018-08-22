@@ -27,7 +27,7 @@ class Program
         //double eps = 1E-14; // error permissible
         do
         {
-            S = S + ++k;
+            S = S + k++;
             y = Pow(S, 2) - n;
             y = Round(Sqrt(y), 3);
         } while (y != Truncate(y));
