@@ -15,7 +15,7 @@ class Program
 
 
             var line = String.Empty;
-            for (byte j = 0; j < pscl[i].Length;)
+            for (byte j = 0; j < pscl[i].Length; )
             {
                 line += pscl[i][j].ToString();
 
