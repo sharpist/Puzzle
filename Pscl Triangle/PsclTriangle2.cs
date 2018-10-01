@@ -58,11 +58,11 @@ struct PsclTriangle
         return triangle;
     }
 
-    public static ushort[] FibDiagonal(ushort[][] triangle, byte row)
+    public static ushort[] FibDiagonal(ushort[][] triangle, int row)
     {
         var column = 0;
         var diagonal = new ushort[(row + 2) / 2];
-        for (var exit = (row + 2) / 2; exit > 0; exit--)
+        while (row >= column)
             diagonal[column] = triangle[row--][column++];
         return diagonal;
     }
