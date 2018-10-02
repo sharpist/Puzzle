@@ -7,30 +7,30 @@
 
 ### v.1 Construction of a triangle: ###
 ```c#
-for (byte i = 0; i < triangle.Length; i++)
+for (byte row = 0; row < triangle.Length; row++)
 {
-    triangle[i] = new ushort[i + 1];
+    triangle[row] = new ushort[row + 1];
 
-    triangle[i][0] = 1;
-    triangle[i][triangle[i].Length - 1] = 1;
+    triangle[row][0] = 1;
+    triangle[row][triangle[row].Length - 1] = 1;
 
     // check subsets
-    if ((triangle[i].Length - 2) > 0)
+    if ((triangle[row].Length - 2) > 0)
     {
         ushort sum = 0;
         var subset = false;
-        for (byte j = 0; j < triangle[i].Length; j++)
+        for (byte column = 0; column < triangle[row].Length; column++)
         {
-            sum += triangle[i - 1][j];
+            sum += triangle[row - 1][column];
             if (subset)
             {
                 subset = false;
-                triangle[i][j] = sum;
+                triangle[row][column] = sum;
                 // all subsets have been found
-                if (triangle[i].Length - 2 == j) break;
+                if (triangle[row].Length - 2 == column) break;
 
                 // search for other subsets
-                sum = 0; j--;
+                sum = 0; column--;
                 continue;
             }
             subset = true;
@@ -41,16 +41,15 @@ for (byte i = 0; i < triangle.Length; i++)
 
 ### v.2 Construction of a triangle: ###
 ```c#
-for (byte i = 0; i < triangle.Length; i++)
+for (byte row = 0; row < triangle.Length; row++)
 {
-    triangle[i] = new ushort[i + 1];
+    triangle[row] = new ushort[row + 1];
     // first-last values
-    triangle[i][0] = triangle[i][triangle[i].Length - 1] = 1;
-
+    triangle[row][0] = triangle[row][triangle[row].Length - 1] = 1;
     // check subsets
-    if (triangle[i].Length - 2 > 0)
-        for (byte j = 0; j < triangle[i].Length - 2; j++)
-            triangle[i][j + 1] = (ushort)(
-                triangle[i - 1][j] + triangle[i - 1][j + 1]);
+    if (triangle[row].Length - 2 > 0)
+        for (byte column = 0; column < triangle[row].Length - 2; column++)
+            triangle[row][column + 1] = (ushort)(
+                triangle[row - 1][column] + triangle[row - 1][column + 1]);
 }
 ```
