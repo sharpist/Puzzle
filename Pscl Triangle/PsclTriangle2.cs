@@ -1,75 +1,39 @@
-﻿using System;
-using System.Threading;
-
-class Program
+﻿namespace PascalTriangle2
 {
-    static void Main()
+    sealed class PsclTriangle
     {
-        var pscl = PsclTriangle.Construct();
-
-        for (byte i = 0; i < 20; i++)
+        public static ushort[][] Construct(byte index)
         {
-            // tab before numbers
-            var tab = new String(' ', (32 - pscl[i].Length) * 3);
-            Console.Write(tab);
-
-
-            var line = String.Empty;
-            for (byte j = 0; j < pscl[i].Length; )
+            var triangle = new ushort[index][];
+            for (byte row = 0; row < triangle.Length; row++)
             {
-                line += pscl[i][j].ToString();
-
-                // space between numbers
-                var space = new String(' ', 5);
-                line += (++j < pscl[i].Length) ?
-                    space.Remove(0, (pscl[i][j].ToString().Length) - 1) : "\n";
+                triangle[row] = new ushort[row + 1];
+                // first-last values
+                triangle[row][0] = triangle[row][triangle[row].Length - 1] = 1;
+                // check subsets
+                if (triangle[row].Length - 2 > 0)
+                    for (byte column = 0; column < triangle[row].Length - 2; column++)
+                        triangle[row][column + 1] = (ushort)(
+                            triangle[row - 1][column] + triangle[row - 1][column + 1]);
             }
-            Console.WriteLine(line);
-            Thread.Sleep(500);
+            return triangle;
         }
-    }
-}
 
-struct PsclTriangle
-{
-    private static ushort[][] triangle;
-    public ushort this[byte i, byte j]
-    {
-        get { return triangle[i][j]; }
-        private set { triangle[i][j] = value; }
-    }
-    static PsclTriangle() => triangle = new ushort[100][];
-
-
-    public static ushort[][] Construct()
-    {
-        for (byte i = 0; i < triangle.Length; i++)
+        public static ushort[] FibDiagonal(ushort[][] triangle, byte index)
         {
-            triangle[i] = new ushort[i + 1];
-            // first-last values
-            triangle[i][0] = triangle[i][triangle[i].Length - 1] = 1;
+            var capacity = (index + 2) / 2;
+            var diagonal = new ushort[capacity];
 
-            // check subsets
-            if (triangle[i].Length - 2 > 0)
-                for (byte j = 0; j < triangle[i].Length - 2; j++)
-                    triangle[i][j + 1] = (ushort)(
-                        triangle[i - 1][j] + triangle[i - 1][j + 1]);
+            for ( ; capacity > 0; capacity--)
+            {
+                var row    = index - (capacity - 1);
+                var column = capacity - 1;
+
+                diagonal[column] = triangle[row][column];
+            }
+            return diagonal;
         }
-        return triangle;
-    }
 
-    public static ushort[] FibDiagonal(ushort[][] triangle, byte index)
-    {
-        var capacity = (index + 2) / 2;
-        var diagonal = new ushort[capacity];
-
-        for ( ; capacity > 0; capacity--)
-        {
-            var row    = index - (capacity - 1);
-            var column = capacity - 1;
-
-            diagonal[column] = triangle[row][column];
-        }
-        return diagonal;
+        private PsclTriangle() { }
     }
 }

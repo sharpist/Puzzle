@@ -1,96 +1,60 @@
-﻿using System;
-using System.Threading;
-
-class Program
+﻿namespace PascalTriangle1
 {
-    static void Main()
+    sealed class PsclTriangle
     {
-        var pscl = PsclTriangle.Construct();
-
-        for (byte i = 0; i < 20; i++)
+        public static ushort[][] Construct(byte index)
         {
-            // tab before numbers
-            var tab = new String(' ', (32 - pscl[i].Length) * 3);
-            Console.Write(tab);
-
-
-            var line = String.Empty;
-            for (byte j = 0; j < pscl[i].Length; )
+            var triangle = new ushort[index][];
+            for (byte row = 0; row < triangle.Length; row++)
             {
-                line += pscl[i][j].ToString();
+                triangle[row] = new ushort[row + 1];
 
-                // space between numbers
-                var space = new String(' ', 5);
-                line += (++j < pscl[i].Length) ?
-                    space.Remove(0, (pscl[i][j].ToString().Length) - 1) : "\n";
-            }
-            Console.WriteLine(line);
-            Thread.Sleep(500);
-        }
-    }
-}
+                triangle[row][0] = 1;
+                triangle[row][triangle[row].Length - 1] = 1;
 
-struct PsclTriangle
-{
-    private static ushort[][] triangle;
-    public ushort this[byte i, byte j]
-    {
-        get { return triangle[i][j]; }
-        private set { triangle[i][j] = value; }
-    }
-    static PsclTriangle() => triangle = new ushort[100][];
-
-
-    public static ushort[][] Construct()
-    {
-        for (byte i = 0; i < triangle.Length; i++)
-        {
-            triangle[i] = new ushort[i + 1];
-
-            triangle[i][0] = 1;
-            triangle[i][triangle[i].Length - 1] = 1;
-
-            // check subsets
-            if ((triangle[i].Length - 2) > 0)
-            {
-                ushort sum = 0;
-                var subset = false;
-                for (byte j = 0; j < triangle[i].Length; j++)
+                // check subsets
+                if ((triangle[row].Length - 2) > 0)
                 {
-                    sum += triangle[i - 1][j];
-                    if (subset)
+                    ushort sum = 0;
+                    var subset = false;
+                    for (byte column = 0; column < triangle[row].Length; column++)
                     {
-                        subset = false;
-                        triangle[i][j] = sum;
-                        // all subsets have been found
-                        if (triangle[i].Length - 2 == j) break;
+                        sum += triangle[row - 1][column];
+                        if (subset)
+                        {
+                            subset = false;
+                            triangle[row][column] = sum;
+                            // all subsets have been found
+                            if (triangle[row].Length - 2 == column) break;
 
-                        // search for other subsets
-                        sum = 0; j--;
-                        continue;
+                            // search for other subsets
+                            sum = 0; column--;
+                            continue;
+                        }
+                        subset = true;
                     }
-                    subset = true;
                 }
             }
+            return triangle;
         }
-        return triangle;
-    }
 
-    public static ushort[] FibDiagonal(ushort[][] triangle, byte row)
-    {
-        var diagonal = new ushort[(row + 2) / 2];
-
-        for (byte Row = row, column = 0; row > 0; row--, column++)
+        public static ushort[] FibDiagonal(ushort[][] triangle, byte index)
         {
-            diagonal[column] = triangle[row][column];
+            var diagonal = new ushort[(index + 2) / 2];
 
-            // row equal even-numbered
-            if ((Row - 1) % 2 == 0)
-                if ((Row + 1) / 2 == triangle[row][column]) break;
-            // row equal odd-numbered
-            if (column == triangle[row - 1].Length) break;
+            for (byte row = index, column = 0; row > 0; row--, column++)
+            {
+                diagonal[column] = triangle[row][column];
+
+                // row equal even-numbered
+                if ((index - 1) % 2 == 0)
+                    if ((index + 1) / 2 == triangle[row][column]) break;
+                // row equal odd-numbered
+                if (column == triangle[row - 1].Length) break;
+            }
+            return diagonal;
         }
-        return diagonal;
+
+        private PsclTriangle() { }
     }
 }
-
