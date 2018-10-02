@@ -60,13 +60,13 @@ struct PsclTriangle
 
     public static ushort[] FibDiagonal(ushort[][] triangle, byte index)
     {
-        var capacity = ((index + 2) / 2);
+        var capacity = (index + 2) / 2;
         var diagonal = new ushort[capacity];
 
         for ( ; capacity > 0; capacity--)
         {
             var row    = index - (capacity - 1);
-            var column = (capacity - 1);
+            var column = capacity - 1;
 
             diagonal[column] = triangle[row][column];
         }
