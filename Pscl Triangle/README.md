@@ -1,6 +1,12 @@
-## "Pascal's triangle"
+﻿## "Pascal's triangle"
 
 * Pascal's triangle is a triangular array of the binomial coefficients.
+* The Fibonacci numbers occur in the sums of "shallow" diagonals in Pascal's triangle.
+* These numbers help to count the number of compositions of 1s and 2s that sum to a given total ```n```:
+there are ```Fn+1``` ways to do this:
+If ```n``` = 5, then ```Fn+1``` = F₆ = 8 counts the eight compositions
+(1+1+1+1+1 = 1+1+1+2 = 1+1+2+1 = 1+2+1+1 = 2+1+1+1 = 2+2+1 = 2+1+2 = 1+2+2, 
+all of which sum to 5).
 
 ### Demonstration: ###
 ![screen capture 1](01.gif)
