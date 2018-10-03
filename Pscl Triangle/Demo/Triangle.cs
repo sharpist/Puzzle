@@ -32,7 +32,7 @@ namespace Demo
                         space.Remove(0, (triangle[row][column].ToString().Length) - 1) : "\n";
                 }
                 Console.WriteLine(line);
-                Thread.Sleep(250);
+                Thread.Sleep(500);
             }
         }
     }

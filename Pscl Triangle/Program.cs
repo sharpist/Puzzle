@@ -7,17 +7,12 @@ namespace Demo
     {
         static void Main()
         {
-            // Triangle
-            var thread1 = new Thread(() => triangle(PsclTriangle.Construct(40), 20));
-            // Fibonacci
-            var thread2 = new Thread(() => fibonacci(PsclTriangle.Construct(40), 20));
-            // Diagonal
-            // ...
+            triangle(PsclTriangle.Construct(40), 20);
 
-            thread1.Start();
-            Thread.Sleep(5000);
-            thread2.Start();
+            diagonal();
+            Thread.Sleep(2000);
 
+            fibonacci(PsclTriangle.Construct(40), 20);
         }
     }
 }

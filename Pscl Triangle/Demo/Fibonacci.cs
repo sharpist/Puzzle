@@ -29,7 +29,7 @@ namespace Demo
 
 
                 Console.WriteLine(fibNumber + "\n");
-                Thread.Sleep(250);
+                Thread.Sleep(100);
             }
         }
     }
