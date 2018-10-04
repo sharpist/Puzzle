@@ -10,7 +10,7 @@ namespace Demo
         private static void fibonacci(ushort[][] triangle, byte index)
         {
             #region PreSettings
-            Console.BackgroundColor = ConsoleColor.Black;
+            Console.BackgroundColor = ConsoleColor.White;
             Console.ForegroundColor = ConsoleColor.Red;
             Console.SetCursorPosition(0, 6);
             #endregion

@@ -8,8 +8,8 @@ namespace Demo
         private static void triangle(ushort[][] triangle, byte index)
         {
             #region PreSettings
-            Console.BackgroundColor = ConsoleColor.Black;
-            Console.ForegroundColor = ConsoleColor.White;
+            Console.BackgroundColor = ConsoleColor.White;
+            Console.ForegroundColor = ConsoleColor.Black;
             Console.SetCursorPosition(0, 5);
             #endregion
 

@@ -1,5 +1,4 @@
 ﻿using PascalTriangle2;
-using System.Threading;
 
 namespace Demo
 {
@@ -9,8 +8,7 @@ namespace Demo
         {
             triangle(PsclTriangle.Construct(40), 20);
 
-            diagonal();
-            Thread.Sleep(2000);
+            diagonal(PsclTriangle.Construct(40), 20);
 
             fibonacci(PsclTriangle.Construct(40), 20);
         }
