@@ -51,7 +51,7 @@ namespace Demo
                             Console.SetCursorPosition(0, 5 + (Row + (Row % 2))); Row += 2;
                             tab = (c != 0) ? // tab before numbers
                                 new String(' ', (32 - triangle[r].Length) * 3) :
-                                new String(' ', (((32 - triangle[r].Length) * 3) - 1));
+                                new String(' ', (32 - triangle[r].Length) * 3 - 1);
                             Console.Write(tab);
 
 
