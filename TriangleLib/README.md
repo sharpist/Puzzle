@@ -20,40 +20,39 @@ namespace TriangleLib
 {
     public struct Triangle
     {
-        public static String TriangleType(double a, double b, double c)
+        public static Boolean GetTriangleType(double a, double b, double c, out TriangleType? t)
         {
-            var sides = new[] { a, b, c };
-            var maxSide = sides.Max();
-            var minSide = sides.Min();
-            var midSide = 0d;
-
-            midSide = (from s in sides where s < maxSide && s > minSide select s)
-                .FirstOrDefault();
-
-            for (int i = 0; i < sides.Length; i++)
-                for (int j = i + 1; j < sides.Length; j++)
-                    if (sides[i] == sides[j]) midSide = sides[i];
+            var sides = (from x in new[] { a, b, c } orderby x descending select x).ToArray();
+            var maxSide = sides[0];
+            var midSide = sides[1];
+            var minSide = sides[2];
+            t = null;
 
             // C<a+b
-            if (!(maxSide < minSide + midSide)) return "Неверные значения";
+            if (!(maxSide < minSide + midSide)) return false;
 
-            // C²=a²+b² прямоугольный
-            else if (Math.Pow(maxSide, 2) == Math.Pow(minSide, 2) + Math.Pow(midSide, 2))
-                return "Прямоугольный треугольник";
+            var cPow = maxSide * maxSide;
+            var bPow = midSide * midSide;
+            var aPow = minSide * minSide;
 
             // C²<a²+b² остроугольный
-            else if (Math.Pow(maxSide, 2) < Math.Pow(minSide, 2) + Math.Pow(midSide, 2))
-                return "Остроугольный треугольник";
-
+            if (cPow < aPow + bPow) t = TriangleType.Acute;
             // C²>a²+b² тупоугольный
-            else if (Math.Pow(maxSide, 2) > Math.Pow(minSide, 2) + Math.Pow(midSide, 2))
-                return "Тупоугольный треугольник";
+            else if (cPow > aPow + bPow) t = TriangleType.Obtuse;
+            // C²=a²+b² прямоугольный
+            else t = TriangleType.Right;
 
-            else return default;
+            return true;
+        }
+        public enum TriangleType : byte
+        {
+            Acute,  // остроугольный треугольник
+            Obtuse, // тупоугольный треугольник
+            Right   // прямоугольный треугольник
         }
     }
 }
-````
+```
 
 ### Демонстрация
 

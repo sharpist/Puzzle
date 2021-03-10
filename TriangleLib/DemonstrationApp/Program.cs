@@ -1,5 +1,6 @@
 ﻿using System;
 using TriangleLib;
+using static TriangleLib.Triangle;
 
 namespace DemonstrationApp
 {
@@ -8,18 +9,26 @@ namespace DemonstrationApp
         public static void Main(string[] args)
         {
             // определить тип треугольника со сторонами 5, 4 и 3
-            var result = new Demonstration(5, 4, 3).TriangleType;
+            var result = new Demonstration(5, 4, 3);
 
-            Console.WriteLine(result);
+            if (result.IsTriangle)
+                Console.WriteLine(result.Type);
+
+            else
+                Console.WriteLine("неверные значения");
+
             Console.ReadKey(true);
         }
     }
 
-    public struct Demonstration
+    public class Demonstration
     {
-        public string TriangleType { get; }
+        public bool IsTriangle { get; }
+
+        TriangleType? t;
+        public TriangleType? Type => t;
 
         public Demonstration(double a, double b, double c) =>
-            TriangleType = Triangle.TriangleType(a, b, c);
+            IsTriangle = Triangle.GetTriangleType(a, b, c, out t);
     }
 }
