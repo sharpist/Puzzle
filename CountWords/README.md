@@ -12,6 +12,7 @@ IDictionary<String, Int32> CountWords(String text)
 
     _ = (from   word in words
          let    lower = word.ToLowerInvariant()
+         where !results.ContainsKey(lower)
          select results[lower] = (from   word in words
                                   where  word.ToLowerInvariant() == lower
                                   select word).Count()
